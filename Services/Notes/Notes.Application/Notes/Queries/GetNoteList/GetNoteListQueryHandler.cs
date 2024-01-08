@@ -3,9 +3,8 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Notes.Application.Interfaces;
-using Notes.Application.Notes.Queries.GetNoteList;
 
-namespace Notes.Application.Notes.Queries.GetNoteDetails;
+namespace Notes.Application.Notes.Queries.GetNoteList;
 
 public class GetNoteListQueryHandler(INotesDbContext dbContext, IMapper mapper) 
     : IRequestHandler<GetNoteListQuery, NoteListVm>
