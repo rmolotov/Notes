@@ -4,6 +4,7 @@ using Notes.Application.DI;
 using Notes.Application.Interfaces;
 using Notes.Persistence.Database;
 using Notes.Persistence.DI;
+using Notes.WebApi.Middleware;
 
 namespace Notes.WebApi;
 
@@ -49,6 +50,7 @@ public class Program
         }
 
         app
+            .UseCustomExceptionHandler()
             .UseRouting()
             .UseHttpsRedirection()
             .UseCors();
