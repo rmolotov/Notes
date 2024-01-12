@@ -14,8 +14,8 @@ public class NoteLookupDto : IMapWith<Note>
             .CreateMap<Note, NoteLookupDto>()
             .ForMember(
                 vm => vm.Id,
-                opt => opt.MapFrom(note => note.Id))
+                options => options.MapFrom(note => note.Id))
             .ForMember(
                 vm => vm.Title,
-                opt => opt.MapFrom(note => note.Title));
+                options => options.MapFrom(note => note.Title));
 }

@@ -19,17 +19,17 @@ public class NoteDetailsVm : IMapWith<Note>
             .CreateMap<Note, NoteDetailsVm>()
             .ForMember(
                 vm => vm.Id,
-                opt => opt.MapFrom(note => note.Id))
+                options => options.MapFrom(note => note.Id))
             .ForMember(
                 vm => vm.Title,
-                opt => opt.MapFrom(note => note.Title))
+                options => options.MapFrom(note => note.Title))
             .ForMember(
                 vm => vm.Details,
-                opt => opt.MapFrom(note => note.Details))
+                options => options.MapFrom(note => note.Details))
             .ForMember(
                 vm => vm.CreatedDate,
-                opt => opt.MapFrom(note => note.CreatedDate))
+                options => options.MapFrom(note => note.CreatedDate))
             .ForMember(
                 vm => vm.EditedDate,
-                opt => opt.MapFrom(note => note.EditedDate));
+                options => options.MapFrom(note => note.EditedDate));
 }

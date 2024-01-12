@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes.Persistence", "Servic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes.Tests", "Services\Notes\Notes.Tests\Notes.Tests.csproj", "{46190EE0-4F81-409E-94DF-BB07401A1095}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes.WebApi", "Services\Notes\Notes.WebApi\Notes.WebApi.csproj", "{E8CB0D58-B7AC-45C0-9714-BB6876ED6F53}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes.WebApi", "Services\Notes\Notes.WebApi\Notes.WebApi.csproj", "{002CF00B-B225-455B-B8FC-384C119F42B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,9 +32,9 @@ Global
 		{46190EE0-4F81-409E-94DF-BB07401A1095}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46190EE0-4F81-409E-94DF-BB07401A1095}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46190EE0-4F81-409E-94DF-BB07401A1095}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E8CB0D58-B7AC-45C0-9714-BB6876ED6F53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E8CB0D58-B7AC-45C0-9714-BB6876ED6F53}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E8CB0D58-B7AC-45C0-9714-BB6876ED6F53}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E8CB0D58-B7AC-45C0-9714-BB6876ED6F53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{002CF00B-B225-455B-B8FC-384C119F42B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{002CF00B-B225-455B-B8FC-384C119F42B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{002CF00B-B225-455B-B8FC-384C119F42B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{002CF00B-B225-455B-B8FC-384C119F42B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

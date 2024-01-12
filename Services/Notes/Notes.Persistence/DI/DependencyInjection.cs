@@ -8,23 +8,19 @@ namespace Notes.Persistence.DI;
 
 public static class DependencyInjection
 {
-    private const string ConfigKey = "DbConnection";
+    private const string SqliteConnectionString = "Sqlite";
     
     public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration[ConfigKey];
-
-        // services
-        //     .AddDbContext<NotesDbContext>(options => 
-        //         options.UseSqlite(connectionString));
-        // services
-        //     .AddScoped<INotesDbContext>(provider =>
-        //         provider.GetService<NotesDbContext>()
-        //     );
+        var connectionString = configuration.GetConnectionString(SqliteConnectionString);
 
         services
-            .AddDbContext<INotesDbContext, NotesDbContext>(options => 
+            .AddDbContext<NotesDbContext>(options => 
                 options.UseSqlite(connectionString));
+        services
+            .AddScoped<INotesDbContext>(provider =>
+                provider.GetService<NotesDbContext>()
+            );
         
         return services;
     }
