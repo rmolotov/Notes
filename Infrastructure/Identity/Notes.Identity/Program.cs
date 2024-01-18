@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Notes.Identity;
 using Notes.Identity.Database;
 
@@ -25,7 +26,8 @@ builder.Services
         config.Cookie.Name = "Notes.Identity.cookie";
         config.LoginPath = "/auth/login";
         config.LogoutPath = "/auth/logout";
-    });
+    })
+    .AddControllersWithViews();
 
 builder.Services
     .AddIdentityServer()
@@ -56,9 +58,14 @@ using (var scope = app.Services.CreateScope())
 
 
 app
+    .UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, "Styles")),
+        RequestPath = "/styles"
+    })
     .UseRouting()
     .UseIdentityServer();
 
-app.MapGet("/", () => "Hello World!");
+app.MapDefaultControllerRoute();
 
 app.Run();
