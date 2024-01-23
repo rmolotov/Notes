@@ -45,6 +45,16 @@ public class Program
                 options.Audience = "NotesWebAPI";
                 options.RequireHttpsMetadata = false;
             });
+
+        builder.Services
+            .AddSwaggerGen(config =>
+            {
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                
+                config.IncludeXmlComments(xmlFile);
+            });
+            
         
         var app = builder.Build();
 
@@ -69,7 +79,13 @@ public class Program
             .UseHttpsRedirection()
             .UseCors("AllowAll")
             .UseAuthentication()
-            .UseAuthorization();
+            .UseAuthorization()
+            .UseSwagger()
+            .UseSwaggerUI(config =>
+            {
+                config.RoutePrefix = string.Empty;
+                config.SwaggerEndpoint("swagger/v1/swagger.json", "Notes API");
+            });
         
         app.MapControllers();
 

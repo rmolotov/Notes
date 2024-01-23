@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Notes.WebApi</name>
+    </assembly>
+    <members>
+        <member name="M:Notes.WebApi.Controllers.NoteController.GetAll">
+            <summary>
+            Get all notes linked with current user
+            </summary>
+            <remarks>
+            Request sample:
+            GET /note
+            </remarks>
+            <returns>NoteListVm</returns>
+            <response code="200">Success</response>
+            <response code="401">If user is unauthorized</response>
+        </member>
+        <member name="M:Notes.WebApi.Controllers.NoteController.Get(System.Guid)">
+            <summary>
+            Get note by id, linked with current user
+            </summary>
+            <remarks>
+            Request sample:
+            GET /note/B4AF7564-24A3-4FF1-AEE4-8AAD5DCB6441
+            </remarks>
+            <param name="id">Note Id (GUID)</param>
+            <returns>NoteDetailsVm</returns>
+            <response code="200">Success</response>
+            <response code="401">If user is unauthorized</response>
+        </member>
+        <member name="M:Notes.WebApi.Controllers.NoteController.Create(Notes.WebApi.Models.CreateNoteDto)">
+            <summary>
+            Create new note
+            </summary>
+            <remarks>
+            Request sample:
+            POST /note
+            {
+                title = "Note Title",
+                details = "Note Details"
+            }
+            </remarks>
+            <returns>Created note Id (GUID)</returns>
+            <response code="201">Created</response>
+            <response code="401">If user is unauthorized</response>
+        </member>
+        <member name="M:Notes.WebApi.Controllers.NoteController.Update(Notes.WebApi.Models.UpdateNoteDto)">
+            <summary>
+            Edit existed note by Id
+            </summary>
+            <remarks>
+            Request sample:
+            PUT /note/2587430E-58F1-4B54-998F-43C5B4825617
+            {
+                title = "Note new title",
+                details = "Note new details"
+            }
+            </remarks>
+            <returns>No content</returns>
+            <response code="204">Updated</response>
+            <response code="401">If user is unauthorized</response>
+        </member>
+        <member name="M:Notes.WebApi.Controllers.NoteController.Delete(System.Guid)">
+            <summary>
+            Delete existed note by Id
+            </summary>
+            <remarks>
+            Request sample:
+            DELETE /note/2587430E-58F1-4B54-998F-43C5B4825617
+            </remarks>
+            <returns>No content</returns>
+            <response code="204">Deleted</response>
+            <response code="401">If user is unauthorized</response>
+        </member>
+    </members>
+</doc>
