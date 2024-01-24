@@ -1,11 +1,14 @@
 using System.Reflection;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 using Notes.Application.Common.Mappings;
 using Notes.Application.DI;
 using Notes.Application.Interfaces;
 using Notes.Persistence.Database;
 using Notes.Persistence.DI;
 using Notes.WebApi.Middleware;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Notes.WebApi;
 
@@ -47,13 +50,20 @@ public class Program
             });
 
         builder.Services
-            .AddSwaggerGen(config =>
+            .AddApiVersioning(options =>
             {
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                
-                config.IncludeXmlComments(xmlFile);
+                options.ReportApiVersions = true;
+                options.ApiVersionReader = new UrlSegmentApiVersionReader();
+            })
+            .AddMvc()
+            .AddApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'VVV";
+                options.SubstituteApiVersionInUrl = true;
             });
+        builder.Services
+            .AddTransient<IConfigureOptions<SwaggerGenOptions>, SwaggerConfigureOptions>()
+            .AddSwaggerGen();
             
         
         var app = builder.Build();
@@ -84,7 +94,10 @@ public class Program
             .UseSwaggerUI(config =>
             {
                 config.RoutePrefix = string.Empty;
-                config.SwaggerEndpoint("swagger/v1/swagger.json", "Notes API");
+                foreach (var description in app.DescribeApiVersions())
+                    config.SwaggerEndpoint(
+                        $"swagger/{description.GroupName}/swagger.json",
+                        $"{description.ApiVersion}");
             });
         
         app.MapControllers();
