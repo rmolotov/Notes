@@ -8,6 +8,9 @@ using Notes.Application.Interfaces;
 using Notes.Persistence.Database;
 using Notes.Persistence.DI;
 using Notes.WebApi.Middleware;
+using Notes.WebApi.Services;
+using Serilog;
+using Serilog.Events;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Notes.WebApi;
@@ -17,6 +20,14 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+            .WriteTo.File("NotesWebAppLog-.txt", rollingInterval: RollingInterval.Day)
+            .CreateLogger();
+        builder.Host.UseSerilog();
+
+        // Application
         builder.Services
             .AddAutoMapper(config =>
             {
@@ -36,6 +47,7 @@ public class Program
             })
             .AddControllers();
 
+        // Auth
         builder.Services
             .AddAuthentication(config =>
             {
@@ -49,6 +61,7 @@ public class Program
                 options.RequireHttpsMetadata = false;
             });
 
+        // Versioning and Swagger
         builder.Services
             .AddApiVersioning(options =>
             {
@@ -64,7 +77,11 @@ public class Program
         builder.Services
             .AddTransient<IConfigureOptions<SwaggerGenOptions>, SwaggerConfigureOptions>()
             .AddSwaggerGen();
-            
+
+        // Logging
+        builder.Services
+            .AddSingleton<ICurrentUserService, CurrentUserService>()
+            .AddHttpContextAccessor();
         
         var app = builder.Build();
 
@@ -76,10 +93,9 @@ public class Program
                 var context = serviceProvider.GetRequiredService<NotesDbContext>();
                 DbInitializer.Initialize(context);
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                Console.WriteLine(ex);
-                throw;
+                Log.Fatal(exception, "An error occured on app initialization");
             }
         }
 
@@ -98,7 +114,8 @@ public class Program
                     config.SwaggerEndpoint(
                         $"swagger/{description.GroupName}/swagger.json",
                         $"{description.ApiVersion}");
-            });
+            })
+            .UseSerilogRequestLogging();
         
         app.MapControllers();
 
