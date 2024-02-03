@@ -56,7 +56,7 @@ public class Program
             })
             .AddJwtBearer("Bearer", options =>
             {
-                options.Authority = "https://localhost:44392";
+                options.Authority = "https://localhost:7217";
                 options.Audience = "NotesWebAPI";
                 options.RequireHttpsMetadata = false;
             });

@@ -12,8 +12,9 @@ using Notes.WebApi.Models;
 namespace Notes.WebApi.Controllers;
 
 [ApiVersionNeutral]
+[Authorize]
 [Produces("application/json")]
-[Route("api/{version:apiVersion}[controller]")]
+[Route("api/{version:apiVersion}/[controller]")]
 public class NoteController(IMapper mapper) : BaseController
 {
     /// <summary>
@@ -29,7 +30,6 @@ public class NoteController(IMapper mapper) : BaseController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [HttpGet]
-    [Authorize]
     public async Task<ActionResult<NoteListVm>> GetAll()
     {
         var query = new GetNoteListQuery
@@ -54,7 +54,6 @@ public class NoteController(IMapper mapper) : BaseController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [HttpGet("{id:guid}")]
-    [Authorize]
     public async Task<ActionResult<NoteDetailsVm>> Get(Guid id)
     {
         var query = new GetNoteDetailsQuery
@@ -83,7 +82,6 @@ public class NoteController(IMapper mapper) : BaseController
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [HttpPost]
-    [Authorize]
     public async Task<ActionResult<Guid>> Create([FromBody] CreateNoteDto dto)
     {
         var command = mapper.Map<CreateNoteCommand>(dto);
@@ -111,7 +109,6 @@ public class NoteController(IMapper mapper) : BaseController
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [HttpPut]
-    [Authorize]
     public async Task<ActionResult> Update([FromBody] UpdateNoteDto dto)
     {
         var command = mapper.Map<UpdateNoteCommand>(dto);
@@ -135,7 +132,6 @@ public class NoteController(IMapper mapper) : BaseController
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [HttpDelete]
-    [Authorize]
     public async Task<ActionResult> Delete([FromBody] Guid id)
     {
         var command = new DeleteNoteCommand

@@ -24,8 +24,8 @@ builder.Services
     .ConfigureApplicationCookie(config =>
     {
         config.Cookie.Name = "Notes.Identity.cookie";
-        config.LoginPath = "/auth/login";
-        config.LogoutPath = "/auth/logout";
+        config.LoginPath = "/Auth/login";
+        config.LogoutPath = "/Auth/logout";
     })
     .AddControllersWithViews();
 
