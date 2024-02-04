@@ -23,7 +23,7 @@ public class Program
 
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-            .WriteTo.File("NotesWebAppLog-.txt", rollingInterval: RollingInterval.Day)
+            .WriteTo.File("Logs\\NotesWebAppLog-.log", rollingInterval: RollingInterval.Day)
             .CreateLogger();
         builder.Host.UseSerilog();
 
