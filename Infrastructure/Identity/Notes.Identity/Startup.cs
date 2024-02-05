@@ -33,7 +33,7 @@ namespace Notes.Identity
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("UsersConnection")));
 
-            services.AddDatabaseDeveloperPageExceptionFilter();
+            // services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -75,7 +75,7 @@ namespace Notes.Identity
             if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseMigrationsEndPoint();
+                // app.UseMigrationsEndPoint();
             }
 
             app.UseStaticFiles();
