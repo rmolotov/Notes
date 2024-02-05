@@ -1,71 +1,81 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
-using Notes.Identity;
-using Notes.Identity.Database;
+﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-var builder = WebApplication.CreateBuilder(args);
 
-builder.Services
-    .AddDbContext<AuthDbContext>(
-        options => options.UseSqlite(builder.Configuration.GetConnectionString("Sqlite")))
-    .AddIdentity<AppUser, IdentityRole>(
-        config =>
-        {
-            config.Password.RequiredLength = 4;
-            config.Password.RequireDigit = false;
-            config.Password.RequireNonAlphanumeric = false;
-            config.Password.RequireUppercase = false;
-        })
-    .AddEntityFrameworkStores<AuthDbContext>()
-    .AddDefaultTokenProviders();
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.SystemConsole.Themes;
+using System;
+using System.Linq;
 
-builder.Services
-    .ConfigureApplicationCookie(config =>
-    {
-        config.Cookie.Name = "Notes.Identity.cookie";
-        config.LoginPath = "/Auth/login";
-        config.LogoutPath = "/Auth/logout";
-    })
-    .AddControllersWithViews();
-
-builder.Services
-    .AddIdentityServer()
-    .AddAspNetIdentity<AppUser>()
-    .AddInMemoryApiResources(Configuration.ApiResources)
-    .AddInMemoryIdentityResources(Configuration.IdentityResources)
-    .AddInMemoryApiScopes(Configuration.ApiScopes)
-    .AddInMemoryClients(Configuration.Clients)
-    .AddDeveloperSigningCredential();
-
-var app = builder.Build();
-
-using (var scope = app.Services.CreateScope())
+namespace Notes.Identity
 {
-    var serviceProvider = scope.ServiceProvider;
-    try
+    public class Program
     {
-        var context = serviceProvider.GetRequiredService<AuthDbContext>();
-        DbInitializer.Initialize(context);
-    }
-    catch (Exception ex)
-    {
-        var logger = serviceProvider.GetRequiredService<ILogger>();
-        logger.LogError(ex, "An error occured on app initialization");
-        throw;
+        public static int Main(string[] args)
+        {
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
+                .MinimumLevel.Override("System", LogEventLevel.Warning)
+                .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
+                .Enrich.FromLogContext()
+                // uncomment to write to Azure diagnostics stream
+                //.WriteTo.File(
+                //    @"D:\home\LogFiles\Application\identityserver.txt",
+                //    fileSizeLimitBytes: 1_000_000,
+                //    rollOnFileSizeLimit: true,
+                //    shared: true,
+                //    flushToDiskInterval: TimeSpan.FromSeconds(1))
+                .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}", theme: AnsiConsoleTheme.Code)
+                .CreateLogger();
+
+            try
+            {
+                var seed = args.Contains("/seed");
+                if (seed)
+                {
+                    args = args.Except(new[] { "/seed" }).ToArray();
+                }
+
+                var host = CreateHostBuilder(args).Build();
+
+                if (seed)
+                {
+                    Log.Information("Seeding database...");
+                    var config = host.Services.GetRequiredService<IConfiguration>();
+                    var connectionString = config.GetConnectionString("UsersConnection");
+                    SeedData.EnsureSeedData(connectionString);
+                    Log.Information("Done seeding database.");
+                    return 0;
+                }
+
+                Log.Information("Starting host...");
+                host.Run();
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "Host terminated unexpectedly.");
+                return 1;
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
+        }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .UseSerilog()
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
     }
 }
-
-
-app
-    .UseStaticFiles(new StaticFileOptions
-    {
-        FileProvider = new PhysicalFileProvider(Path.Combine(builder.Environment.ContentRootPath, "Styles")),
-        RequestPath = "/styles"
-    })
-    .UseRouting()
-    .UseIdentityServer();
-
-app.MapDefaultControllerRoute();
-
-app.Run();
