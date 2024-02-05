@@ -101,7 +101,7 @@ namespace Notes.Identity
 
         public void Configure(IApplicationBuilder app)
         {
-            InitializeDatabase(app);
+            // InitializeDatabase(app); // uncomment for add migrations and scopes/clients to ext db
             
             if (Environment.IsDevelopment())
             {
