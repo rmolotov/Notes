@@ -12,7 +12,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes.Tests", "Services\Not
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes.Identity", "Infrastructure\Identity\Notes.Identity\Notes.Identity.csproj", "{3F85FF7B-3776-4112-85F2-CC126EFA11DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserManagementService", "Services\UserManagement\UserManagementService\UserManagementService.csproj", "{B72A512E-AC7D-45EA-A6E2-387F48199A6E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserManagement.WebApi", "Services\UserManagement\UserManagement.WebApi\UserManagement.WebApi.csproj", "{B72A512E-AC7D-45EA-A6E2-387F48199A6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserManagement.Persistence", "Services\UserManagement\UserManagement.Persistence\UserManagement.Persistence.csproj", "{9F71A07B-7D0D-4643-AC92-67289631653D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserManagement.Core", "Services\UserManagement\UserManagement.Core\UserManagement.Core.csproj", "{0B235826-7801-4D76-8AB9-69099F185CAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,5 +52,13 @@ Global
 		{B72A512E-AC7D-45EA-A6E2-387F48199A6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B72A512E-AC7D-45EA-A6E2-387F48199A6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B72A512E-AC7D-45EA-A6E2-387F48199A6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F71A07B-7D0D-4643-AC92-67289631653D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F71A07B-7D0D-4643-AC92-67289631653D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F71A07B-7D0D-4643-AC92-67289631653D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F71A07B-7D0D-4643-AC92-67289631653D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B235826-7801-4D76-8AB9-69099F185CAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B235826-7801-4D76-8AB9-69099F185CAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B235826-7801-4D76-8AB9-69099F185CAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B235826-7801-4D76-8AB9-69099F185CAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
