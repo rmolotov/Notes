@@ -44,6 +44,7 @@ namespace Notes.Identity
                             UserName = "alice",
                             Email = "AliceSmith@email.com",
                             EmailConfirmed = true,
+                            NickName = "-=@1iC3=-",
                         };
                         var result = userMgr.CreateAsync(alice, "Pass123$").Result;
                         if (!result.Succeeded)
@@ -75,7 +76,8 @@ namespace Notes.Identity
                         {
                             UserName = "bob",
                             Email = "BobSmith@email.com",
-                            EmailConfirmed = true
+                            EmailConfirmed = true,
+                            NickName = "xXx_606_xXx"
                         };
                         var result = userMgr.CreateAsync(bob, "Pass123$").Result;
                         if (!result.Succeeded)
