@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes.Tests", "Services\Not
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes.Identity", "Infrastructure\Identity\Notes.Identity\Notes.Identity.csproj", "{3F85FF7B-3776-4112-85F2-CC126EFA11DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserManagementService", "Services\UserManagement\UserManagementService\UserManagementService.csproj", "{B72A512E-AC7D-45EA-A6E2-387F48199A6E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{3F85FF7B-3776-4112-85F2-CC126EFA11DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F85FF7B-3776-4112-85F2-CC126EFA11DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F85FF7B-3776-4112-85F2-CC126EFA11DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B72A512E-AC7D-45EA-A6E2-387F48199A6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B72A512E-AC7D-45EA-A6E2-387F48199A6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B72A512E-AC7D-45EA-A6E2-387F48199A6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B72A512E-AC7D-45EA-A6E2-387F48199A6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
