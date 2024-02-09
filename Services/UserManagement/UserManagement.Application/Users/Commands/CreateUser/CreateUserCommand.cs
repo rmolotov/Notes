@@ -1,8 +1,8 @@
 using UserManagement.Core.Entities;
 
-namespace UserManagement.Application.Users.Requests;
+namespace UserManagement.Application.Users.Commands.CreateUser;
 
-public class CreateUserRequest
+public record CreateUserCommand
 {
     public ApplicationUser User { get; set; }
     public string Password { get; set; }
