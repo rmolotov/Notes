@@ -8,7 +8,7 @@ namespace UserManagementService.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-// [Authorize(AuthenticationSchemes = "Bearer")]
+[Authorize(AuthenticationSchemes = "Bearer")]
 public class UsersController(UserManager<ApplicationUser> userManager) : ControllerBase
 {
     [HttpPost("add")]
