@@ -9,7 +9,8 @@ public class ApplicationUserConfiguration : IEntityTypeConfiguration<Application
     public void Configure(EntityTypeBuilder<ApplicationUser> builder)
     {
         builder
-            .Property(user => user.UserName)
+            .Property(user => user.NickName)
+            .IsRequired()
             .HasMaxLength(16);
         builder
             .Property(user => user.Level)
