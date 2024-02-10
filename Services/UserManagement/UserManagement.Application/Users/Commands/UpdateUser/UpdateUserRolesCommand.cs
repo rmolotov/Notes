@@ -1,6 +1,6 @@
 namespace UserManagement.Application.Users.Commands.UpdateUser;
 
-public record UpdateRolesCommand
+public record UpdateUserRolesCommand
 {
     public string UserName { get; set; }
 

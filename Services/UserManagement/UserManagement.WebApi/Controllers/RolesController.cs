@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using UserManagement.Application.Roles.UpdateRole;
 
 namespace UserManagementService.Controllers;
 
@@ -28,18 +29,18 @@ public class RolesController(RoleManager<IdentityRole> roleManager) : Controller
     }
     
     [HttpPut]
-    public async Task<IdentityResult> Update([FromBody] string roleName)
+    public async Task<IdentityResult> Update([FromBody] UpdateRoleCommand command)
     {
-        var targetRole = await roleManager.FindByNameAsync(roleName);
+        var targetRole = await roleManager.FindByNameAsync(command.currentRoleName);
 
         if (targetRole == null)
             return IdentityResult.Failed(
                 new IdentityError
                 {
-                    Description = $"Role {roleName} not found"
+                    Description = $"Role {command.currentRoleName} not found"
                 });
 
-        targetRole.Name = roleName;
+        targetRole.Name = command.NewRoleName;
 
         return await roleManager.UpdateAsync(targetRole);
     }

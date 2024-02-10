@@ -86,7 +86,7 @@ public class UsersController(UserManager<ApplicationUser> userManager) : Control
     }
 
     [HttpPut("addRoles")]
-    public async Task<IdentityResult> AddRoles([FromBody] UpdateRolesCommand command)
+    public async Task<IdentityResult> AddRoles([FromBody] UpdateUserRolesCommand command)
     {
         var targetUser = await userManager.FindByNameAsync(command.UserName);
         
@@ -103,7 +103,7 @@ public class UsersController(UserManager<ApplicationUser> userManager) : Control
     }
     
     [HttpPut("removeRoles")]
-    public async Task<IdentityResult> RemoveRoles([FromBody] UpdateRolesCommand command)
+    public async Task<IdentityResult> RemoveRoles([FromBody] UpdateUserRolesCommand command)
     {
         var targetUser = await userManager.FindByNameAsync(command.UserName);
         
