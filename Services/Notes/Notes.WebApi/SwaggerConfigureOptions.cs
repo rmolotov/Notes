@@ -1,5 +1,5 @@
-using System.Reflection;
 using Asp.Versioning.ApiExplorer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -29,7 +29,7 @@ public class SwaggerConfigureOptions(IApiVersionDescriptionProvider provider) : 
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.Http,
                     BearerFormat = "JWT",
-                    Scheme = "bearer"
+                    Scheme = JwtBearerDefaults.AuthenticationScheme
                 });
 
             options.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -40,7 +40,7 @@ public class SwaggerConfigureOptions(IApiVersionDescriptionProvider provider) : 
                         Reference = new OpenApiReference
                         {
                             Type = ReferenceType.SecurityScheme,
-                            Id = $"AuthToken {description.ApiVersion}"
+                            Id = JwtBearerDefaults.AuthenticationScheme
                         }
                     },
                     Array.Empty<string>()

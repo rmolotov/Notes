@@ -21,7 +21,6 @@ builder.Services
     .AddIdentityServerAuthentication(options =>
     {
         options.Authority = "https://localhost:5001";
-        options.ApiName = "https://localhost:5001/resources";
         options.RequireHttpsMetadata = false;
     });
 builder.Services

@@ -2,6 +2,7 @@ using System.Reflection;
 using Asp.Versioning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Notes.Application.Common.Mappings;
 using Notes.Application.DI;
 using Notes.Application.Interfaces;
@@ -56,10 +57,21 @@ public class Program
             })
             .AddJwtBearer("Bearer", options =>
             {
-                options.Authority = "https://localhost:7217";
-                options.Audience = "NotesWebAPI";
+                options.Authority = "https://localhost:5001";
+                options.Audience = "Notes.Web";
                 options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = false
+                };
             });
+        builder.Services
+            .AddAuthorizationBuilder()
+            .AddPolicy("ApiScopePolicy", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireClaim("scope", "Notes.Web");
+                });
 
         // Versioning and Swagger
         builder.Services
@@ -100,12 +112,6 @@ public class Program
         }
 
         app
-            .UseCustomExceptionHandler()
-            .UseRouting()
-            .UseHttpsRedirection()
-            .UseCors("AllowAll")
-            .UseAuthentication()
-            .UseAuthorization()
             .UseSwagger()
             .UseSwaggerUI(config =>
             {
@@ -115,9 +121,18 @@ public class Program
                         $"swagger/{description.GroupName}/swagger.json",
                         $"{description.ApiVersion}");
             })
+            .UseCustomExceptionHandler()
+            .UseRouting()
+            .UseHttpsRedirection()
+            .UseCors("AllowAll")
+            .UseAuthentication()
+            .UseAuthorization()
+            
             .UseSerilogRequestLogging();
-        
-        app.MapControllers();
+
+        app
+            .MapControllers()
+            .RequireAuthorization("ApiScopePolicy");
 
         app.Run();
     }
