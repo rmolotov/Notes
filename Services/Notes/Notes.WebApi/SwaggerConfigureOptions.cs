@@ -21,7 +21,7 @@ public class SwaggerConfigureOptions(IApiVersionDescriptionProvider provider) : 
                 });
             
             options.AddSecurityDefinition(
-                $"Auth token {description.ApiVersion}",
+                JwtBearerDefaults.AuthenticationScheme, // it's important to be same as Id in scheme!
                 new OpenApiSecurityScheme
                 {
                     Name = "Authorization",

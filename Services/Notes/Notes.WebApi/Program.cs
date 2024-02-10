@@ -57,7 +57,7 @@ public class Program
             })
             .AddJwtBearer("Bearer", options =>
             {
-                options.Authority = "https://localhost:5001";
+                options.Authority = "https://localhost:5001/";
                 options.Audience = "Notes.Web";
                 options.RequireHttpsMetadata = false;
                 options.TokenValidationParameters = new TokenValidationParameters
