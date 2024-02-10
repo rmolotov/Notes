@@ -12,7 +12,7 @@ using Notes.WebApi.Models;
 namespace Notes.WebApi.Controllers;
 
 [ApiVersionNeutral]
-[Authorize]
+[Authorize(AuthenticationSchemes = "Bearer")]
 [Produces("application/json")]
 [Route("api/{version:apiVersion}/[controller]")]
 public class NoteController(IMapper mapper) : BaseController
