@@ -1,0 +1,22 @@
+﻿services:
+  
+  usersdb:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    
+  infrastructure-identity:
+    image: infrastructure-identity
+    build:
+      context: .
+      dockerfile: Infrastructure/Identity/Notes.Identity/Dockerfile
+
+  notes-webapi:
+    image: notes-webapi
+    build:
+      context: .
+      dockerfile: Services/Notes/Notes.WebApi/Dockerfile
+
+  usermanagement-webapi:
+    image: usermanagement-webapi
+    build:
+      context: .
+      dockerfile: Services/UserManagement/UserManagement.WebApi/Dockerfile

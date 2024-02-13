@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -38,5 +39,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Services\UserManagement\UserManagement.Core\UserManagement.Core.csproj" />
     <ProjectReference Include="..\..\..\Services\UserManagement\UserManagement.Persistence\UserManagement.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\..\.dockerignore">
+      <Link>.dockerignore</Link>
+    </Content>
   </ItemGroup>
 </Project>

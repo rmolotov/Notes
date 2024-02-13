@@ -1,0 +1,37 @@
+﻿services:
+  
+  usersdb:
+    environment:
+      SA_PASSWORD: "password123!"
+      ACCEPT_EULA: "Y"
+    restart: always
+    ports:
+      - "1433:1433"
+    
+  infrastructure-identity:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:5001
+    depends_on: 
+      - usersdb
+    ports:
+      - "5001:5001"
+      
+  usermanagement-webapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:5002
+    depends_on: 
+      - infrastructure-identity
+    ports:
+      - "5002:5002"
+
+  notes-webapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://+:5003
+    depends_on: 
+      - infrastructure-identity
+      - usermanagement-webapi
+    ports:
+      - "5003:5003"
