@@ -1,8 +1,10 @@
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Logging;
 using UserManagement.Core.Entities;
 using UserManagement.Persistence.Database;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +22,7 @@ builder.Services
     .AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
     .AddIdentityServerAuthentication(options =>
     {
-        options.Authority = "https://localhost:5001";
+        options.Authority = builder.Configuration.GetValue<string>("IdentityUri");
         options.RequireHttpsMetadata = false;
     });
 builder.Services
@@ -38,11 +40,20 @@ builder.Services
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<UsersDbContext>();
+    if (context.Database.GetPendingMigrations().Any())
+        context.Database.Migrate();
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+IdentityModelEventSource.ShowPII = true;
 
 app
     .UseHttpsRedirection()

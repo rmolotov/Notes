@@ -58,6 +58,7 @@ namespace Notes.Identity
 
                     // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
                     options.EmitStaticAudienceClaim = true;
+                    options.IssuerUri = Configuration.GetValue<string>("IdentityUri");
                 })
                 .AddConfigurationStore(options =>
                 {
