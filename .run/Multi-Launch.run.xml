@@ -21,7 +21,7 @@
         </option>
         <option name="executable">
           <ExecutableSnapshot>
-            <option name="id" value="runConfig:.NET Launch Settings Profile.UserManagementService: https" />
+            <option name="id" value="runConfig:.NET Launch Settings Profile.UserManagement.WebApi: https" />
           </ExecutableSnapshot>
         </option>
       </ExecutableRowSnapshot>
